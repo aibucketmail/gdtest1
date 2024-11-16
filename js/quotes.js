@@ -87,8 +87,9 @@ function createQuoteCard(quote) {
 
     card.innerHTML = content;
 
+    const websiteUrl = 'https://bhagwadgita.softlabs.in';
     // Add click events for share buttons
-    const shareText = `${quote.sanskrit}\n\n${quote.hindi}\n\n${quote.reference}\n${quote.source}\n\n#BhagavadGita #GitaQuotes #SpiritualWisdom #GitaPress #Sanskrit #Spirituality #Krishna #Dharma`;
+    const shareText = `${quote.sanskrit}\n\n${quote.hindi}\n\n${quote.reference}\n${quote.source}\n\nऔर भी श्लोक पढ़ने के लिए विजिट करें:\n${websiteUrl}\n\n#BhagavadGita #GitaQuotes #SpiritualWisdom #GitaPress #Sanskrit #Spirituality #Krishna #Dharma`;
     
     const whatsappBtn = card.querySelector('.whatsapp-btn');
     whatsappBtn.addEventListener('click', (e) => {
@@ -99,7 +100,7 @@ function createQuoteCard(quote) {
     const facebookBtn = card.querySelector('.facebook-btn');
     facebookBtn.addEventListener('click', (e) => {
         e.stopPropagation();
-        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&quote=${encodeURIComponent(shareText)}`, '_blank');
+        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(websiteUrl)}&quote=${encodeURIComponent(shareText)}`, '_blank');
     });
 
     const instagramBtn = card.querySelector('.instagram-btn');

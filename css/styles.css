@@ -5,6 +5,9 @@
     z-index: 1;
     border-radius: 1rem;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .quote-card:hover {
@@ -121,5 +124,31 @@ body {
     }
     to {
         transform: translateX(100vw);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+    .container {
+        padding: 1rem;
+        margin-top: 1rem;
+    }
+    
+    .quote-card {
+        font-size: 0.9em;
+    }
+    
+    .page-title {
+        font-size: 2.5rem;
+    }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+    .container {
+        padding: 1.5rem;
+    }
+    
+    .quote-card {
+        font-size: 0.95em;
     }
 }

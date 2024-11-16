@@ -3,163 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bhagavad Gita Quotes.</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Bhagavad Gita Quotes</title>
+    
+    <!-- Styles -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Scripts -->
     <script src="js/quotes.js"></script>
-    <style>
-        .quote-card {
-            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-            transition: all 0.3s ease;
-            position: relative;
-            z-index: 1;
-        }
-        .quote-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            background: linear-gradient(135deg, #FFA500 0%, #FF4500 100%);
-        }
-        .font-playfair {
-            font-family: 'Playfair Display', serif;
-        }
-        body {
-            background: linear-gradient(120deg, #FF6B6B 0%, #4ECDC4 100%);
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-        .container {
-            backdrop-filter: blur(10px);
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            margin-top: 2rem;
-            padding: 2rem;
-            position: relative;
-            z-index: 1;
-        }
-        .page-title {
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-            background: linear-gradient(to right, #FFD700, #FF4500);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: titleGlow 3s ease-in-out infinite;
-            position: relative;
-            z-index: 1;
-        }
-        @keyframes titleGlow {
-            0%, 100% { filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.6)); }
-            50% { filter: drop-shadow(0 0 12px rgba(255, 69, 0, 0.8)); }
-        }
-        .copy-btn {
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-        }
-        .copy-btn::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 60%);
-            transform: translate(-50%, -50%) scale(0);
-            transition: transform 0.5s;
-        }
-        .copy-btn:active::after {
-            transform: translate(-50%, -50%) scale(2);
-        }
-
-        /* Cloud Styles */
-        .clouds-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            overflow: hidden;
-        }
-        .cloud {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.4);
-            border-radius: 100px;
-            animation: floatCloud linear infinite;
-            opacity: 0.6;
-        }
-        .cloud::before,
-        .cloud::after {
-            content: '';
-            position: absolute;
-            background: inherit;
-            border-radius: 50%;
-        }
-        .cloud::before {
-            width: 50%;
-            height: 50%;
-            top: -25%;
-            left: 25%;
-        }
-        .cloud::after {
-            width: 70%;
-            height: 70%;
-            top: -35%;
-            right: 25%;
-        }
-        @keyframes floatCloud {
-            from {
-                transform: translateX(-100%);
-            }
-            to {
-                transform: translateX(100vw);
-            }
-        }
-    </style>
+    <script src="js/audio.js"></script>
 </head>
 <body class="min-h-screen p-4">
     <audio id="bgMusic" loop>
         <source src="sounds/flute.mp3" type="audio/mpeg">
     </audio>
-    <script>
-        let hasInteracted = false;
-        
-        const startMusic = async (event) => {
-            if (hasInteracted) return;
-            hasInteracted = true;
-            
-            const audio = document.getElementById('bgMusic');
-            audio.volume = 0.3;
-            
-            try {
-                await audio.play();
-                // Remove listeners only if play succeeds
-                document.removeEventListener('click', startMusic);
-                document.removeEventListener('touchstart', startMusic);
-                document.removeEventListener('scroll', startMusic);
-            } catch (error) {
-                console.log('Waiting for valid user interaction');
-                hasInteracted = false;
-            }
-        };
 
-        // Wait for the document to be fully loaded
-        document.addEventListener('DOMContentLoaded', () => {
-            document.addEventListener('click', startMusic);
-            document.addEventListener('touchstart', startMusic);
-            document.addEventListener('scroll', startMusic);
-        });
-    </script>
     <!-- Clouds Container -->
     <div class="clouds-container">
         <div class="cloud" style="top: 10%; width: 200px; height: 60px; animation-duration: 30s;"></div>
         <div class="cloud" style="top: 30%; width: 160px; height: 50px; animation-duration: 25s; animation-delay: -15s;"></div>
         <div class="cloud" style="top: 50%; width: 180px; height: 55px; animation-duration: 35s; animation-delay: -5s;"></div>
-        <div class="cloud" style="top: 70%; width: 140px; height: 45px; animation-duration: 28s; animation-delay: -20s;"></div>
-        <div class="cloud" style="top: 85%; width: 220px; height: 65px; animation-duration: 32s; animation-delay: -10s;"></div>
+        <div class="cloud" style="top: 70%; width: 140px; height: 45px; animation-duration: 28s; animation-delay: -8s;"></div>
     </div>
 
+    <!-- Main Content -->
     <div class="container mx-auto px-4 py-8">
-        <h1 class="text-5xl font-playfair text-center mb-8 page-title">श्रीमद्भगवद्गीता के अनमोल वचन</h1>
+        <h1 class="text-4xl md:text-5xl font-bold text-center mb-8 font-playfair page-title">
+            श्रीमद्भगवद्गीता
+        </h1>
+        
         <p class="text-center text-white mb-8">Refresh the page for new quotes ✨</p>
         
         <div id="quotes-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

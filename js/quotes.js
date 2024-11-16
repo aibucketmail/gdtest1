@@ -61,76 +61,54 @@ const gitaQuotes = [
     }
 ];
 
-// Function to create a quote card
 function createQuoteCard(quote) {
     const card = document.createElement('div');
-    card.className = 'quote-card rounded-2xl shadow-xl p-8 hover:shadow-2xl';
-    
-    const sanskrit = document.createElement('p');
-    sanskrit.className = 'text-xl font-playfair text-purple-900 mb-4 font-bold';
-    sanskrit.textContent = quote.sanskrit;
-    
-    const hindi = document.createElement('p');
-    hindi.className = 'text-lg text-purple-800 mb-4';
-    hindi.textContent = quote.hindi;
-    
-    const reference = document.createElement('div');
-    reference.className = 'text-md text-purple-900 font-semibold mb-4';
-    reference.textContent = quote.reference;
+    card.className = 'quote-card p-6 relative overflow-hidden';
 
-    const source = document.createElement('div');
-    source.className = 'text-sm text-purple-700 italic';
-    source.textContent = quote.source;
+    const content = `
+        <div class="relative z-10">
+            <div class="text-xl font-bold mb-4 font-playfair text-purple-900">${quote.sanskrit.replace(/\n/g, '<br>')}</div>
+            <div class="text-lg mb-4 text-purple-800">${quote.hindi}</div>
+            <div class="text-md text-purple-900 font-semibold mb-2">${quote.reference}</div>
+            <div class="text-sm text-purple-700 italic">${quote.source}</div>
+            <button class="copy-btn mt-4 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded transition duration-300">
+                Copy for Instagram
+            </button>
+        </div>
+    `;
 
-    const copyButton = document.createElement('button');
-    copyButton.className = 'copy-btn mt-4 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded transition duration-300';
-    copyButton.textContent = 'Copy for Instagram ';
-    
-    copyButton.addEventListener('click', () => {
+    card.innerHTML = content;
+
+    // Add click event for the copy button
+    const copyBtn = card.querySelector('.copy-btn');
+    copyBtn.addEventListener('click', () => {
         const textToCopy = `${quote.sanskrit}\n\n${quote.hindi}\n\n${quote.reference}\n${quote.source}\n\n#BhagavadGita #GitaQuotes #SpiritualWisdom #GitaPress #Sanskrit #Spirituality #Krishna #Dharma`;
         navigator.clipboard.writeText(textToCopy).then(() => {
-            copyButton.textContent = 'Copied! ';
+            copyBtn.textContent = 'Copied!';
             setTimeout(() => {
-                copyButton.textContent = 'Copy for Instagram ';
+                copyBtn.textContent = 'Copy for Instagram';
             }, 2000);
         });
     });
 
-    card.appendChild(sanskrit);
-    card.appendChild(hindi);
-    card.appendChild(reference);
-    card.appendChild(source);
-    card.appendChild(copyButton);
-    
     return card;
 }
 
-// Function to display random quotes
 function displayRandomQuotes() {
     const container = document.getElementById('quotes-container');
     container.innerHTML = ''; // Clear existing quotes
-    
-    // Create a copy of the quotes array
-    let availableQuotes = [...gitaQuotes];
-    
-    // Number of quotes to display (responsive)
-    const displayCount = window.innerWidth >= 1024 ? 6 : (window.innerWidth >= 768 ? 4 : 2);
-    
-    // Select random quotes
-    for (let i = 0; i < Math.min(displayCount, availableQuotes.length); i++) {
-        const randomIndex = Math.floor(Math.random() * availableQuotes.length);
-        const quote = availableQuotes.splice(randomIndex, 1)[0];
-        const card = createQuoteCard(quote);
-        container.appendChild(card);
-    }
+
+    // Get 6 random quotes
+    const selectedQuotes = [...gitaQuotes]
+        .sort(() => Math.random() - 0.5)
+        .slice(0, 6);
+
+    selectedQuotes.forEach(quote => {
+        container.appendChild(createQuoteCard(quote));
+    });
 }
 
 // Initial display
-displayRandomQuotes();
-
-// Update on window resize
-let resizeTimeout;
-window.addEventListener('resize', () => {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(displayRandomQuotes, 250);
+document.addEventListener('DOMContentLoaded', () => {
+    displayRandomQuotes();
 });

@@ -70,24 +70,43 @@ function createQuoteCard(quote) {
             <div class="text-xl font-bold mb-4 font-playfair text-purple-900">${quote.sanskrit.replace(/\n/g, '<br>')}</div>
             <div class="text-lg mb-4 text-purple-800">${quote.hindi}</div>
             <div class="text-md text-purple-900 font-semibold mb-2">${quote.reference}</div>
-            <div class="text-sm text-purple-700 italic">${quote.source}</div>
-            <button class="copy-btn mt-4 bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded transition duration-300">
-                Copy for Instagram
-            </button>
+            <div class="text-sm text-purple-700 italic mb-4">${quote.source}</div>
+            <div class="flex justify-center space-x-4">
+                <button class="share-btn whatsapp-btn bg-green-500 hover:bg-green-600 text-white w-10 h-10 rounded-full transition duration-300 flex items-center justify-center">
+                    <i class="fab fa-whatsapp text-xl"></i>
+                </button>
+                <button class="share-btn facebook-btn bg-blue-600 hover:bg-blue-700 text-white w-10 h-10 rounded-full transition duration-300 flex items-center justify-center">
+                    <i class="fab fa-facebook-f text-lg"></i>
+                </button>
+                <button class="share-btn instagram-btn bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-700 hover:to-pink-600 text-white w-10 h-10 rounded-full transition duration-300 flex items-center justify-center">
+                    <i class="fab fa-instagram text-xl"></i>
+                </button>
+            </div>
         </div>
     `;
 
     card.innerHTML = content;
 
-    // Add click event for the copy button
-    const copyBtn = card.querySelector('.copy-btn');
-    copyBtn.addEventListener('click', () => {
-        const textToCopy = `${quote.sanskrit}\n\n${quote.hindi}\n\n${quote.reference}\n${quote.source}\n\n#BhagavadGita #GitaQuotes #SpiritualWisdom #GitaPress #Sanskrit #Spirituality #Krishna #Dharma`;
-        navigator.clipboard.writeText(textToCopy).then(() => {
-            copyBtn.textContent = 'Copied!';
-            setTimeout(() => {
-                copyBtn.textContent = 'Copy for Instagram';
-            }, 2000);
+    // Add click events for share buttons
+    const shareText = `${quote.sanskrit}\n\n${quote.hindi}\n\n${quote.reference}\n${quote.source}\n\n#BhagavadGita #GitaQuotes #SpiritualWisdom #GitaPress #Sanskrit #Spirituality #Krishna #Dharma`;
+    
+    const whatsappBtn = card.querySelector('.whatsapp-btn');
+    whatsappBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        window.open(`https://wa.me/?text=${encodeURIComponent(shareText)}`, '_blank');
+    });
+
+    const facebookBtn = card.querySelector('.facebook-btn');
+    facebookBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&quote=${encodeURIComponent(shareText)}`, '_blank');
+    });
+
+    const instagramBtn = card.querySelector('.instagram-btn');
+    instagramBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        navigator.clipboard.writeText(shareText).then(() => {
+            alert('श्लोक कॉपी किया गया है। इसे Instagram पर शेयर करें!');
         });
     });
 
